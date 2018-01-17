@@ -73,14 +73,3 @@ def ws_listen(on_transcation, on_block):
     )
     ws.on_open = on_open
     ws.run_forever()
-
-
-if __name__ == "__main__":
-    def on_block(hash):
-        print("block: %s" % hash)
-
-
-    def on_transaction(tx_info):
-        pprint(tx_info)
-
-    ws_listen(on_transaction, on_block)
