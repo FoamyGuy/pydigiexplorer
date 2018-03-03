@@ -11,6 +11,8 @@ import websocket
 
 import pydigiexplorer as digi
 
+API_URL = "https://digiexplorer.info/"
+WS_URL = "wss://digiexplorer.info/"
 
 def ws_listen(on_transcation, on_block):
     def ping(*args):
@@ -62,11 +64,11 @@ def ws_listen(on_transcation, on_block):
         thread.start_new_thread(subscribe, ())
 
     millis = int(round(time.time() * 1000))
-    r = requests.get("https://digiexplorer.info/socket.io/?EIO=2&transport=polling&t={}-0".format(millis))
+    r = requests.get(API_URL + "socket.io/?EIO=2&transport=polling&t={}-0".format(millis))
     sid = r.headers['Set-Cookie'].split('io=')[1]
     websocket.enableTrace(True)
     ws = websocket.WebSocketApp(
-        "wss://digiexplorer.info/socket.io/?EIO=2&transport=websocket&sid={}".format(sid),
+        WS_URL + "socket.io/?EIO=2&transport=websocket&sid={}".format(sid),
         on_message=on_message,
         on_error=on_error,
         on_close=on_close
